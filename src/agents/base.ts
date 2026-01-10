@@ -11,6 +11,10 @@ export const SUPPORTED_AGENTS: Record<string, Agent> = {
     name: 'claude',
     getSkillsDir: () => path.join(os.homedir(), '.claude', 'skills'),
   },
+  cursor: {
+    name: 'cursor',
+    getSkillsDir: () => path.join(os.homedir(), '.cursor', 'skills'),
+  },
   codex: {
     name: 'codex',
     getSkillsDir: () => path.join(os.homedir(), '.codex', 'skills'),

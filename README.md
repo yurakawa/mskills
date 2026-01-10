@@ -78,6 +78,7 @@ This will create symbolic links (default) or copies of your skills in the agent'
 ## Supported Agents
 
 - **Claude** (`~/.claude/skills`)
+- **Cursor** (`~/.cursor/skills`)
 - **Codex** (`~/.codex/skills`)
 - **Gemini** (`~/.gemini/skills`)
 - **GitHub Copilot CLI** (`~/.copilot/skills`)
