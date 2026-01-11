@@ -14,7 +14,7 @@ export function registerAddCommand(program: Command) {
         console.log(chalk.green(`✓ Skill '${name}' added`));
       } catch (error: any) {
         console.error(chalk.red(`Error: ${error.message}`));
-        process.exit(1);
+        process.exitCode = 1;
       }
     });
 }
