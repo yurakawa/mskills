@@ -85,11 +85,11 @@
 
 Currently supported agents with their skill directories:
 
-- **Claude**: `~/.claude/skills`
-- **Cursor**: `~/.cursor/skills`
-- **Codex**: `~/.codex/skills`
-- **Gemini**: `~/.gemini/skills`
-- **GitHub Copilot CLI**: `~/.copilot/skills`
+- **claude**: `~/.claude/skills`
+- **cursor**: `~/.cursor/skills`
+- **codex**: `~/.codex/skills`
+- **gemini**: `~/.gemini/skills`
+- **github-copilot-cli**: `~/.copilot/skills`
 
 When adding new agents, update `src/agents/base.ts` with the agent name and skills directory path.
 

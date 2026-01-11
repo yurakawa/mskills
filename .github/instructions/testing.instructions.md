@@ -46,6 +46,8 @@ describe('Feature Name', () => {
 
 ### File System Operations
 
+When mocking Node.js built-in modules, always use the full `node:` protocol in the mock path:
+
 ```typescript
 vi.mock('node:fs/promises', () => ({
   default: {
