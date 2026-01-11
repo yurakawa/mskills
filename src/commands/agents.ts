@@ -1,6 +1,7 @@
 import { Command } from 'commander';
 import chalk from 'chalk';
 import { agentManager } from '../agents/manager.js';
+import { getErrorMessage } from '../utils/error.js';
 
 export function registerAgentsCommand(program: Command) {
   const agentsCmd = program
@@ -16,9 +17,8 @@ export function registerAgentsCommand(program: Command) {
         try {
           await agentManager.enable(name);
           console.log(chalk.green(`✓ Agent '${name}' enabled`));
-        } catch (error: any) {
-          console.error(chalk.red(`Error: ${error.message}`));
-          process.exitCode = 1;
+        } catch (error: unknown) {
+          console.error(chalk.red(`Error: ${getErrorMessage(error)}`));
         }
       }
     });
@@ -32,9 +32,8 @@ export function registerAgentsCommand(program: Command) {
         try {
           await agentManager.disable(name);
           console.log(chalk.green(`✓ Agent '${name}' disabled`));
-        } catch (error: any) {
-          console.error(chalk.red(`Error: ${error.message}`));
-          process.exitCode = 1;
+        } catch (error: unknown) {
+          console.error(chalk.red(`Error: ${getErrorMessage(error)}`));
         }
       }
     });

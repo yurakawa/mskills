@@ -1,9 +1,45 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import { Command } from 'commander';
 import { registerApplyCommand } from './apply.js';
 import * as configModule from '../config/index.js';
 import fs from 'node:fs/promises';
+import type { Stats } from 'node:fs';
 import ora from 'ora';
+
+/**
+ * Helper to create a partial mock of fs.Stats
+ */
+function createMockStats(overrides: Partial<Stats> = {}): Stats {
+  return {
+    isSymbolicLink: () => false,
+    isDirectory: () => false,
+    isFile: () => false,
+    isBlockDevice: () => false,
+    isCharacterDevice: () => false,
+    isFIFO: () => false,
+    isSocket: () => false,
+    dev: 0,
+    ino: 0,
+    mode: 0,
+    nlink: 0,
+    uid: 0,
+    gid: 0,
+    rdev: 0,
+    size: 0,
+    blksize: 0,
+    blocks: 0,
+    atimeMs: 0,
+    mtimeMs: 0,
+    ctimeMs: 0,
+    birthtimeMs: 0,
+    atime: new Date(),
+    mtime: new Date(),
+    ctime: new Date(),
+    birthtime: new Date(),
+    ...overrides,
+  } as Stats;
+}
+
 
 // Mock dependencies
 vi.mock('node:fs/promises');
@@ -23,7 +59,7 @@ vi.mock('../agents/base.js', () => ({
 
 describe('apply command', () => {
     let program: Command;
-    let mockSpinner: any;
+    let mockSpinner: { start: Mock; succeed: Mock; fail: Mock; warn: Mock; text: string };
 
     beforeEach(() => {
         vi.clearAllMocks();
@@ -37,10 +73,10 @@ describe('apply command', () => {
             warn: vi.fn(),
             text: ''
         };
-        (ora as any).mockReturnValue(mockSpinner);
+        vi.mocked(ora).mockReturnValue(mockSpinner as any); // eslint-disable-line @typescript-eslint/no-explicit-any
 
         // Setup default config mock
-        (configModule.loadConfig as any).mockResolvedValue({
+        vi.mocked(configModule.loadConfig).mockResolvedValue({
             skills: {
                 'demo-skill': { path: '/source/path' }
             },
@@ -48,9 +84,9 @@ describe('apply command', () => {
         });
         
         // Setup fs mocks
-        (fs.mkdir as any).mockResolvedValue(undefined);
-        (fs.lstat as any).mockRejectedValue(new Error('ENOENT')); // Default: target doesn't exist
-        (fs.symlink as any).mockResolvedValue(undefined);
+        vi.mocked(fs.mkdir).mockResolvedValue(undefined);
+        vi.mocked(fs.lstat).mockRejectedValue(new Error('ENOENT')); // Default: target doesn't exist
+        vi.mocked(fs.symlink).mockResolvedValue(undefined);
         
         // Register the command
         registerApplyCommand(program);
@@ -65,10 +101,10 @@ describe('apply command', () => {
 
     it('should warn and skip if target exists and force is false', async () => {
         // Mock target existing
-        (fs.lstat as any).mockResolvedValue({
+        vi.mocked(fs.lstat).mockResolvedValue(createMockStats({
              isSymbolicLink: () => false,
              isDirectory: () => true 
-        });
+        }));
 
         await program.parseAsync(['node', 'test', 'apply']);
         
@@ -79,11 +115,11 @@ describe('apply command', () => {
 
     it('should overwrite if target exists and --force is true', async () => {
         // Mock target existing
-        (fs.lstat as any).mockResolvedValue({
+        vi.mocked(fs.lstat).mockResolvedValue(createMockStats({
              isSymbolicLink: () => false,
              isDirectory: () => true 
-        });
-        (fs.rm as any).mockResolvedValue(undefined);
+        }));
+        vi.mocked(fs.rm).mockResolvedValue(undefined);
 
         await program.parseAsync(['node', 'test', 'apply', '--force']);
         

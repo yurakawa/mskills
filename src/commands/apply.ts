@@ -5,6 +5,7 @@ import chalk from 'chalk';
 import ora from 'ora';
 import { loadConfig } from '../config/index.js';
 import { SUPPORTED_AGENTS } from '../agents/base.js';
+import { getErrorMessage } from '../utils/error.js';
 
 export function registerApplyCommand(program: Command) {
   program
@@ -77,16 +78,16 @@ export function registerApplyCommand(program: Command) {
                     await fs.cp(sourcePath, targetPath, { recursive: true });
                 }
 
-             } catch (err: any) {
-                 spinner.warn(`Failed to apply ${skillName} to ${agentName}: ${err.message}`);
+             } catch (err: unknown) {
+                 spinner.warn(`Failed to apply ${skillName} to ${agentName}: ${getErrorMessage(err)}`);
              }
           }
         }
 
         spinner.succeed(chalk.green('Skills applied successfully!'));
-      } catch (error: any) {
-        spinner.fail(chalk.red(`Error: ${error.message}`));
-        process.exitCode = 1;
+      } catch (error: unknown) {
+        spinner.fail(chalk.red(`Error: ${getErrorMessage(error)}`));
+        process.exit(1);
       }
     });
 }

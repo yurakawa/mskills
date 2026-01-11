@@ -10,7 +10,7 @@
     "build": "tsc",
     "dev": "ts-node src/index.ts",
     "start": "node dist/index.js",
-    "test": "vitest",
+    "test": "vitest run src",
     "lint": "eslint .",
     "prepare": "npm run build"
   },

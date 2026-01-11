@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { loadConfig, saveConfig } from './index.js';
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import os from 'node:os';
+
 
 vi.mock('node:fs/promises');
 vi.mock('node:os', () => ({
@@ -21,7 +21,7 @@ describe('Config', () => {
 
   describe('loadConfig', () => {
     it('should return default config if file does not exist', async () => {
-      (fs.readFile as any).mockRejectedValue({ code: 'ENOENT' });
+      vi.mocked(fs.readFile).mockRejectedValue({ code: 'ENOENT' });
 
       const config = await loadConfig();
 
@@ -30,7 +30,7 @@ describe('Config', () => {
 
     it('should return parsed config if file exists', async () => {
       const mockConfig = { skills: { test: { path: '/path' } }, agents: ['claude'] };
-      (fs.readFile as any).mockResolvedValue(JSON.stringify(mockConfig));
+      vi.mocked(fs.readFile).mockResolvedValue(JSON.stringify(mockConfig));
 
       const config = await loadConfig();
 

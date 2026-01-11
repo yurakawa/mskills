@@ -7,7 +7,7 @@ vi.mock('../config/index.js');
 describe('AgentManager', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    (configModule.loadConfig as any).mockResolvedValue({ skills: {}, agents: [] });
+    vi.mocked(configModule.loadConfig).mockResolvedValue({ skills: {}, agents: [] });
   });
 
   describe('enable', () => {
@@ -26,7 +26,7 @@ describe('AgentManager', () => {
 
   describe('disable', () => {
     it('should disable an agent', async () => {
-      (configModule.loadConfig as any).mockResolvedValue({
+      vi.mocked(configModule.loadConfig).mockResolvedValue({
         skills: {},
         agents: ['claude', 'gemini']
       });

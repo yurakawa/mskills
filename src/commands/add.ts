@@ -1,6 +1,7 @@
 import type { Command } from 'commander';
 import chalk from 'chalk';
 import { skillManager } from '../skills/manager.js';
+import { getErrorMessage } from '../utils/error.js';
 
 export function registerAddCommand(program: Command) {
   program
@@ -12,9 +13,9 @@ export function registerAddCommand(program: Command) {
       try {
         await skillManager.add(name, path);
         console.log(chalk.green(`✓ Skill '${name}' added`));
-      } catch (error: any) {
-        console.error(chalk.red(`Error: ${error.message}`));
-        process.exitCode = 1;
+      } catch (error: unknown) {
+        console.error(chalk.red(`Error: ${getErrorMessage(error)}`));
+        process.exit(1);
       }
     });
 }
