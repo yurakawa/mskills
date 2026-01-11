@@ -86,7 +86,7 @@ export function registerApplyCommand(program: Command) {
         spinner.succeed(chalk.green('Skills applied successfully!'));
       } catch (error: any) {
         spinner.fail(chalk.red(`Error: ${error.message}`));
-        process.exit(1);
+        process.exitCode = 1;
       }
     });
 }
