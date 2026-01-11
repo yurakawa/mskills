@@ -26,6 +26,9 @@ export async function loadConfig(): Promise<Config> {
     if (error.code === 'ENOENT') {
       return configSchema.parse({});
     }
+    if (error instanceof SyntaxError) {
+      throw new Error(`Invalid JSON in configuration file (${CONFIG_PATH}): ${error.message}`);
+    }
     throw error;
   }
 }

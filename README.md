@@ -44,6 +44,9 @@ Select which agents you want to apply the skills to.
 mskills agents add <agent-names...>
 ```
 
+> [!TIP]
+> See [Supported Agents](#supported-agents) for the list of available agent names (e.g., `claude`, `cursor`, `github-copilot-cli`).
+
 **Example:**
 
 ```bash
@@ -77,11 +80,13 @@ This will create symbolic links (default) or copies of your skills in the agent'
 
 ## Supported Agents
 
-- **Claude** (`~/.claude/skills`)
-- **Cursor** (`~/.cursor/skills`)
-- **Codex** (`~/.codex/skills`)
-- **Gemini** (`~/.gemini/skills`)
-- **GitHub Copilot CLI** (`~/.copilot/skills`)
+| Agent | CLI Name | Skills Directory |
+| :--- | :--- | :--- |
+| **Claude** | `claude` | `~/.claude/skills` |
+| **Cursor** | `cursor` | `~/.cursor/skills` |
+| **Codex** | `codex` | `~/.codex/skills` |
+| **Gemini** | `gemini` | `~/.gemini/skills` |
+| **GitHub Copilot CLI** | `github-copilot-cli` | `~/.copilot/skills` |
 
 ## Demo
 

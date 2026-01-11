@@ -18,6 +18,7 @@ export function registerAgentsCommand(program: Command) {
           console.log(chalk.green(`✓ Agent '${name}' enabled`));
         } catch (error: any) {
           console.error(chalk.red(`Error: ${error.message}`));
+          process.exitCode = 1;
         }
       }
     });
@@ -33,6 +34,7 @@ export function registerAgentsCommand(program: Command) {
           console.log(chalk.green(`✓ Agent '${name}' disabled`));
         } catch (error: any) {
           console.error(chalk.red(`Error: ${error.message}`));
+          process.exitCode = 1;
         }
       }
     });

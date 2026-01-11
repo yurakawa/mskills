@@ -14,6 +14,7 @@ export function registerRemoveCommand(program: Command) {
           console.log(chalk.green(`✓ Skill '${name}' removed`));
         } catch (error: any) {
           console.error(chalk.red(`Error: ${error.message}`));
+          process.exitCode = 1;
         }
       }
     });
