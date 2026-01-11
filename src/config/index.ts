@@ -22,8 +22,8 @@ export async function loadConfig(): Promise<Config> {
     const content = await fs.readFile(CONFIG_PATH, 'utf-8');
     const json = JSON.parse(content);
     return configSchema.parse(json);
-  } catch (error: any) {
-    if (error.code === 'ENOENT') {
+  } catch (error: unknown) {
+    if ((error as { code?: string }).code === 'ENOENT') {
       return configSchema.parse({});
     }
     if (error instanceof SyntaxError) {

@@ -1,14 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { skillManager } from './manager.js';
 import * as configModule from '../config/index.js';
-import path from 'node:path';
+
 
 vi.mock('../config/index.js');
 
 describe('SkillManager', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    (configModule.loadConfig as any).mockResolvedValue({ skills: {}, agents: [] });
+    vi.mocked(configModule.loadConfig).mockResolvedValue({ skills: {}, agents: [] });
   });
 
   describe('add', () => {
@@ -27,7 +27,7 @@ describe('SkillManager', () => {
 
   describe('remove', () => {
     it('should remove a skill from config', async () => {
-      (configModule.loadConfig as any).mockResolvedValue({
+      vi.mocked(configModule.loadConfig).mockResolvedValue({
         skills: { 'test-skill': { path: '/abs/path' } },
         agents: []
       });
