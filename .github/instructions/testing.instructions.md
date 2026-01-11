@@ -46,9 +46,13 @@ describe('Feature Name', () => {
 
 ### File System Operations
 
-When mocking Node.js built-in modules, always use the full `node:` protocol in the mock path:
+When mocking Node.js built-in modules, the mock path must match the import statement. If you import with the `node:` protocol, use the same protocol in the mock:
 
 ```typescript
+// If importing with node: protocol
+import fs from 'node:fs/promises';
+
+// Mock with the same path
 vi.mock('node:fs/promises', () => ({
   default: {
     readFile: vi.fn(),
