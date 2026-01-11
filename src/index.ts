@@ -4,10 +4,14 @@ import { registerCommands } from './commands/index.js';
 
 const program = new Command();
 
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const pkg = require('../package.json');
+
 program
   .name('mskills')
   .description('Manage your AI Agent Skills in one place')
-  .version('0.1.0');
+  .version(pkg.version);
 
 registerCommands(program);
 
