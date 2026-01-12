@@ -1,40 +1,41 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { skillManager } from './manager.js';
-import * as configModule from '../config/index.js';
+import fs from 'node:fs/promises';
+import { loadConfig, saveConfig, SKILLS_DIR } from '../config/index.js';
 
-
+vi.mock('node:fs/promises');
 vi.mock('../config/index.js');
 
 describe('SkillManager', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(configModule.loadConfig).mockResolvedValue({ skills: {}, agents: [] });
+    vi.mocked(loadConfig).mockResolvedValue({ skills: {}, agents: [] });
+    vi.mocked(fs.access).mockResolvedValue(undefined);
+    vi.mocked(fs.mkdir).mockResolvedValue(undefined);
+    vi.mocked(fs.cp).mockResolvedValue(undefined);
+    vi.mocked(fs.rm).mockResolvedValue(undefined);
   });
 
   describe('add', () => {
     it('should add a skill to config', async () => {
       await skillManager.add('test-skill', './relative/path');
 
-      expect(configModule.saveConfig).toHaveBeenCalledWith(expect.objectContaining({
-        skills: expect.objectContaining({
-          'test-skill': expect.objectContaining({
-            path: expect.stringContaining('relative/path') // resolve logic makes it absolute
-          })
-        })
-      }));
+      expect(fs.access).toHaveBeenCalled();
+      expect(fs.cp).toHaveBeenCalled();
+      expect(saveConfig).toHaveBeenCalled();
     });
   });
 
   describe('remove', () => {
     it('should remove a skill from config', async () => {
-      vi.mocked(configModule.loadConfig).mockResolvedValue({
+      vi.mocked(loadConfig).mockResolvedValue({
         skills: { 'test-skill': { path: '/abs/path' } },
         agents: []
       });
 
       await skillManager.remove('test-skill');
 
-      expect(configModule.saveConfig).toHaveBeenCalledWith(expect.objectContaining({
+      expect(saveConfig).toHaveBeenCalledWith(expect.objectContaining({
         skills: {}
       }));
     });

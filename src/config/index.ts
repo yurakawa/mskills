@@ -16,6 +16,7 @@ const configSchema = z.object({
 export type Config = z.infer<typeof configSchema>;
 
 const CONFIG_PATH = path.join(os.homedir(), '.mskills.json');
+export const SKILLS_DIR = path.join(os.homedir(), '.mskills', 'skills');
 
 export async function loadConfig(): Promise<Config> {
   try {
