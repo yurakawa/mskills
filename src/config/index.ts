@@ -15,10 +15,27 @@ const configSchema = z.object({
 
 export type Config = z.infer<typeof configSchema>;
 
-const CONFIG_PATH = path.join(os.homedir(), '.mskills.json');
-export const SKILLS_DIR = path.join(os.homedir(), '.mskills', 'skills');
+const OLD_CONFIG_PATH = path.join(os.homedir(), '.mskills.json');
+const MSKILLS_DIR = path.join(os.homedir(), '.mskills');
+const CONFIG_PATH = path.join(MSKILLS_DIR, 'config.json');
+export const SKILLS_DIR = path.join(MSKILLS_DIR, 'skills');
+
+async function migrateConfig() {
+  try {
+    const stats = await fs.stat(OLD_CONFIG_PATH);
+    if (stats.isFile()) {
+      await fs.mkdir(MSKILLS_DIR, { recursive: true });
+      await fs.rename(OLD_CONFIG_PATH, CONFIG_PATH);
+    }
+  } catch (error: unknown) {
+    if ((error as { code?: string }).code !== 'ENOENT') {
+      console.warn(`Warning: Failed to migrate existing config: ${error}`);
+    }
+  }
+}
 
 export async function loadConfig(): Promise<Config> {
+  await migrateConfig();
   try {
     const content = await fs.readFile(CONFIG_PATH, 'utf-8');
     const json = JSON.parse(content);
@@ -35,6 +52,7 @@ export async function loadConfig(): Promise<Config> {
 }
 
 export async function saveConfig(config: Config): Promise<void> {
+  await fs.mkdir(MSKILLS_DIR, { recursive: true });
   const content = JSON.stringify(config, null, 2);
   await fs.writeFile(CONFIG_PATH, content, 'utf-8');
 }
