@@ -16,6 +16,10 @@
     "version": "changeset version",
     "release": "changeset publish"
   },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "keywords": [
     "mcp",
     "skills",
