@@ -18,29 +18,3 @@ jobs:
         id: release
         with:
           release-type: node
-
-      - name: Debug release-please outputs
-        run: echo "release_created=${{ steps.release.outputs.release_created }}"
-
-      # Publish to npm when a release is created
-      - uses: actions/checkout@v4
-        if: ${{ steps.release.outputs.release_created }}
-
-      - name: Use Node.js 22.x
-        uses: actions/setup-node@v4
-        if: ${{ steps.release.outputs.release_created }}
-        with:
-          node-version: 22.x
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Install dependencies
-        if: ${{ steps.release.outputs.release_created }}
-        run: npm ci
-
-      - name: Build
-        if: ${{ steps.release.outputs.release_created }}
-        run: npm run build
-
-      - name: Publish to npm
-        if: ${{ steps.release.outputs.release_created }}
-        run: npm publish --provenance --access public
