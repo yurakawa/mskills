@@ -14,10 +14,13 @@ jobs:
       pull-requests: write
       id-token: write # Required for Trusted Publishing
     steps:
-      - uses: google-github-actions/release-please-action@v4
+      - uses: googleapis/release-please-action@v4
         id: release
         with:
           release-type: node
+
+      - name: Debug release-please outputs
+        run: echo "release_created=${{ steps.release.outputs.release_created }}"
 
       # Publish to npm when a release is created
       - uses: actions/checkout@v4
