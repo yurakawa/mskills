@@ -74,9 +74,15 @@ This will create symbolic links (default) or copies of your skills in the agent'
 | `mskills agents add <names...>` | Enable target agents. |
 | `mskills agents remove <names...>` | Disable target agents. |
 | `mskills agents list` | List enabled agents. |
-| `mskills agents list` | List enabled agents. |
 | `mskills apply` | Apply skills to enabled agents. |
 | `mskills apply --force` | Force overwrite existing skills. |
+
+## Configuration
+
+**mskills** stores its configuration and data in the following directory:
+
+- **Config File**: `~/.mskills/config.json`
+- **Internal Skills Cache**: `~/.mskills/skills` (used for internal management)
 
 ## Supported Agents
 
