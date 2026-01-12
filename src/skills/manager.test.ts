@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { skillManager } from './manager.js';
 import fs from 'node:fs/promises';
-import { loadConfig, saveConfig, SKILLS_DIR } from '../config/index.js';
+import { loadConfig, saveConfig } from '../config/index.js';
 
 vi.mock('node:fs/promises');
 vi.mock('../config/index.js');
