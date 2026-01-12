@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.4
+
+### Patch Changes
+
+- [#20](https://github.com/yurakawa/mskills/pull/20) [`f76a009`](https://github.com/yurakawa/mskills/commit/f76a0095680f0bc6105d1b78989505c8d86891b0) Thanks [@yurakawa](https://github.com/yurakawa)! - feat: add config command and fix OIDC publishing setup
+
 ## 0.3.3
 
 ### Patch Changes
