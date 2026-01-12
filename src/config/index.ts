@@ -17,7 +17,7 @@ export type Config = z.infer<typeof configSchema>;
 
 const OLD_CONFIG_PATH = path.join(os.homedir(), '.mskills.json');
 const MSKILLS_DIR = path.join(os.homedir(), '.mskills');
-const CONFIG_PATH = path.join(MSKILLS_DIR, 'config.json');
+export const CONFIG_PATH = path.join(MSKILLS_DIR, 'config.json');
 export const SKILLS_DIR = path.join(MSKILLS_DIR, 'skills');
 
 async function migrateConfig() {

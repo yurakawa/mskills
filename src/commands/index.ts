@@ -5,6 +5,7 @@ import { registerRemoveCommand } from './remove.js';
 import { registerListCommand } from './list.js';
 import { registerAgentsCommand } from './agents.js';
 import { registerApplyCommand } from './apply.js';
+import { registerConfigCommand } from './config.js';
 
 export function registerCommands(program: Command) {
   registerAddCommand(program);
@@ -13,4 +14,5 @@ export function registerCommands(program: Command) {
   registerListCommand(program);
   registerAgentsCommand(program);
   registerApplyCommand(program);
+  registerConfigCommand(program);
 }
