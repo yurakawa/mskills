@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { loadConfig, saveConfig } from './index.js';
 import fs from 'node:fs/promises';
+import { Stats } from 'node:fs';
 import path from 'node:path';
 
 
@@ -45,7 +46,7 @@ describe('Config', () => {
     it('should migrate old config if it exists', async () => {
       const mockConfig = { skills: { test: { path: '/path' } }, agents: ['claude'] };
       // Old file exists
-      vi.mocked(fs.stat).mockResolvedValue({ isFile: () => true } as any);
+      vi.mocked(fs.stat).mockResolvedValue({ isFile: () => true } as Stats);
       // New file doesn't exist yet but let's assume migrate moves it
       vi.mocked(fs.readFile).mockResolvedValue(JSON.stringify(mockConfig));
 
