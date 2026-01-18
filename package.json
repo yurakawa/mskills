@@ -26,6 +26,7 @@
     "skills",
     "agent",
     "agent skill",
+    "agent skills",
     "cli"
   ],
   "author": "yurakawa",
@@ -41,6 +42,7 @@
   "dependencies": {
     "chalk": "^5.6.2",
     "commander": "^14.0.2",
+    "js-yaml": "^4.1.1",
     "ora": "^8.2.0",
     "zod": "^4.3.5"
   },
@@ -49,6 +51,7 @@
     "@changesets/cli": "^2.29.8",
     "@eslint/js": "^9.39.2",
     "@types/bun": "^1.3.5",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.0.6",
     "eslint": "^9.39.2",
     "globals": "^17.0.0",

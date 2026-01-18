@@ -14,11 +14,12 @@ describe('SkillManager', () => {
     vi.mocked(fs.mkdir).mockResolvedValue(undefined);
     vi.mocked(fs.cp).mockResolvedValue(undefined);
     vi.mocked(fs.rm).mockResolvedValue(undefined);
+    vi.mocked(fs.readFile).mockResolvedValue('---\nname: test-skill\ndescription: test\n---\n');
   });
 
   describe('add', () => {
     it('should add a skill to config', async () => {
-      await skillManager.add('test-skill', './relative/path');
+      await skillManager.add('test-skill', './test-skill');
 
       expect(fs.access).toHaveBeenCalled();
       expect(fs.cp).toHaveBeenCalled();
