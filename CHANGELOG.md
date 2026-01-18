@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.6
+
+### Patch Changes
+
+- [#26](https://github.com/yurakawa/mskills/pull/26) [`ad520e5`](https://github.com/yurakawa/mskills/commit/ad520e557b653a336fdc29a18d7aaad617d8aa83) Thanks [@yurakawa](https://github.com/yurakawa)! - feat: add skill linting and reorganize sample/test skills
+
 ## 0.3.5
 
 ### Patch Changes
