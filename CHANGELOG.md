@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.5
+
+### Patch Changes
+
+- [#24](https://github.com/yurakawa/mskills/pull/24) [`640c329`](https://github.com/yurakawa/mskills/commit/640c3291cf2ee47fc5470dbc3e3a6254f9e34343) Thanks [@yurakawa](https://github.com/yurakawa)! - feat: add version subcommand
+
 ## 0.3.4
 
 ### Patch Changes
