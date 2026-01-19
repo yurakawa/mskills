@@ -45,4 +45,22 @@ describe('SkillManager', () => {
       await expect(skillManager.remove('non-existent')).rejects.toThrow();
     });
   });
+
+  describe('getSkillsWithMetadata', () => {
+    it('should return skills with metadata', async () => {
+      vi.mocked(loadConfig).mockResolvedValue({
+        skills: { 'test-skill': { path: '/abs/test-skill' } },
+        agents: []
+      });
+
+      const skills = await skillManager.getSkillsWithMetadata();
+
+      expect(skills).toHaveLength(1);
+      expect(skills[0]).toEqual({
+        name: 'test-skill',
+        description: 'test',
+        path: '/abs/test-skill'
+      });
+    });
+  });
 });
