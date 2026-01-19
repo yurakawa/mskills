@@ -1,6 +1,6 @@
 # [mskills](https://github.com/yurakawa/mskills)
 
-**mskills** is a CLI tool to manage "Agent Skills" for various AI agents (Claude, Codex, Gemini, Copilot) in a centralized way.
+**mskills** is a CLI tool to manage "Agent Skills" for various AI agents (Claude, Codex, Gemini, Copilot, Antigravity) in a centralized way.
 
 ## Installation
 
