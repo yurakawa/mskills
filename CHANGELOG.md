@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.7
+
+### Patch Changes
+
+- [#28](https://github.com/yurakawa/mskills/pull/28) [`4b9abb5`](https://github.com/yurakawa/mskills/commit/4b9abb56b64c81674ca948fb59b945ca991f1923) Thanks [@yurakawa](https://github.com/yurakawa)! - feat: add prompt command to generate XML for AI agents
+
 ## 0.3.6
 
 ### Patch Changes
