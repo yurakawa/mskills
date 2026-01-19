@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { validateSkill, ValidationError } from './linter.js';
 import fs from 'node:fs/promises';
-import path from 'node:path';
 
 vi.mock('node:fs/promises');
 

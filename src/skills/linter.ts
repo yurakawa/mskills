@@ -54,8 +54,6 @@ export async function validateSkill(skillPath: string) {
     throw new ValidationError("'name' field must be a string.");
   }
 
-  const nameRegex = /^[a-z0-xi0-9]+(-[a-z0-xi0-9]+)*$/;
-  // Note: specification says "unicode lowercase alphanumeric characters and hyphens"
   // simplified here to a-z0-9 and hyphens which is common for slug-like names.
   // The spec also says 1-64 characters.
   if (metadata.name.length < 1 || metadata.name.length > 64) {
