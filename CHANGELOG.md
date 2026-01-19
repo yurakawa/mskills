@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.8
+
+### Patch Changes
+
+- [#32](https://github.com/yurakawa/mskills/pull/32) [`2164542`](https://github.com/yurakawa/mskills/commit/2164542f6036f6a4483e1dda35acc1fc504e12b9) Thanks [@yurakawa](https://github.com/yurakawa)! - feat: add Makefile for standardized development tasks
+
+- [#31](https://github.com/yurakawa/mskills/pull/31) [`2988a05`](https://github.com/yurakawa/mskills/commit/2988a05fb10b821ad0ac04b12de94ed204960a81) Thanks [@yurakawa](https://github.com/yurakawa)! - feat: add support for Antigravity agent
+
 ## 0.3.7
 
 ### Patch Changes
