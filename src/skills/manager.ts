@@ -58,6 +58,24 @@ export class SkillManager {
     const config = await loadConfig();
     return config.skills;
   }
+
+  async getSkillsWithMetadata() {
+    const config = await loadConfig();
+    const skills = [];
+    for (const [name, skillConfig] of Object.entries(config.skills)) {
+      try {
+        const metadata = await validateSkill(skillConfig.path);
+        skills.push({
+          name: metadata.name,
+          description: metadata.description,
+          path: skillConfig.path,
+        });
+      } catch (error) {
+        console.warn(`Warning: Failed to load metadata for skill '${name}':`, error instanceof Error ? error.message : String(error));
+      }
+    }
+    return skills;
+  }
 }
 
 export const skillManager = new SkillManager();

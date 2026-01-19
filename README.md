@@ -70,6 +70,25 @@ mskills apply
 
 This will create symbolic links (default) or copies of your skills in the agent's skills directory (e.g., `~/.claude/skills/hello-world`).
 
+### 4. Generate XML Prompt for AI Agents
+
+Generate an XML block of available skills to be injected into an AI agent's system prompt.
+
+```bash
+mskills prompt
+```
+
+This will output an XML block like:
+```xml
+<available_skills>
+  <skill>
+    <name>hello-world</name>
+    <description>A simple hello world skill</description>
+    <location>/Users/yurakawa/.mskills/skills/hello-world/SKILL.md</location>
+  </skill>
+</available_skills>
+```
+
 ### Commands
 
 | Command | Description |
@@ -82,6 +101,7 @@ This will create symbolic links (default) or copies of your skills in the agent'
 | `mskills agents list` | List enabled agents. |
 | `mskills apply` | Apply skills to enabled agents. |
 | `mskills apply --force` | Force overwrite existing skills. |
+| `mskills prompt` | Generate XML prompt for AI agents. |
 
 ## Configuration
 
