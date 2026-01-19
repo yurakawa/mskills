@@ -1,12 +1,22 @@
-.PHONY: build test lint
+.PHONY: lint test all build clean
 
-build:
-	npm run build
+# Run both lint and test
+all: lint test
 
-test:
-	npm run test
-
+# Linting tasks
+# Note: Assuming 'npm run lint' is configured in package.json. 
+# If not, you might want to use 'npx eslint .' or similar.
 lint:
 	npm run lint
 
-all: lint build test
+# Test tasks
+test:
+	npm test
+
+# Build tasks
+build:
+	npm run build
+
+# Clean tasks
+clean:
+	rm -rf dist
