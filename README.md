@@ -119,6 +119,7 @@ This will output an XML block like:
 | **Codex** | `codex` | `~/.codex/skills` |
 | **Gemini** | `gemini` | `~/.gemini/skills` |
 | **GitHub Copilot CLI** | `github-copilot-cli` | `~/.copilot/skills` |
+| **Antigravity** | `antigravity` | `~/.gemini/antigravity/skills` |
 
 ## Demo
 
