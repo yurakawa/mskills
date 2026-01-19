@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.8
+
+### Patch Changes
+
+- [#32](https://github.com/yurakawa/mskills/pull/32) [`2164542`](https://github.com/yurakawa/mskills/commit/2164542f6036f6a4483e1dda35acc1fc504e12b9) Thanks [@yurakawa](https://github.com/yurakawa)! - feat: add Makefile for standardized development tasks
+
 ## 0.3.7
 
 ### Patch Changes
