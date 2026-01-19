@@ -27,4 +27,8 @@ export const SUPPORTED_AGENTS: Record<string, Agent> = {
     name: 'github-copilot-cli',
     getSkillsDir: () => path.join(os.homedir(), '.copilot', 'skills'),
   },
+  antigravity: {
+    name: 'antigravity',
+    getSkillsDir: () => path.join(os.homedir(), '.gemini', 'antigravity', 'skills'),
+  },
 };
