@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.9
+
+### Patch Changes
+
+- [#36](https://github.com/yurakawa/mskills/pull/36) [`bfabc99`](https://github.com/yurakawa/mskills/commit/bfabc999550202803505197226e870216e5f481b) Thanks [@yurakawa](https://github.com/yurakawa)! - feat: support installing skills from GitHub URLs
+
 ## 0.3.8
 
 ### Patch Changes
