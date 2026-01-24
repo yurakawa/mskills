@@ -22,23 +22,31 @@ npm link
 
 ## Usage
 
-### 1. Add a Skill
+### 1. Install a Skill
 
-Register a skill directory to mskills. **mskills** validates the skill directory based on the [Agent Skills specification](https://agentskills.io/specification).
-
-#### Valid Skill Requirements:
-- A `SKILL.md` file must exist in the root of the skill directory.
-- `SKILL.md` must start with YAML frontmatter containing `name` and `description`.
-- The `name` in `SKILL.md` must match the parent directory name.
-- For more details, see the [official specification](https://agentskills.io/specification).
+Install a skill from a GitHub URL or a local path.
 
 ```bash
-mskills add <skill-name> <path/to/skill>
+mskills install <source> [name]
 ```
 
-**Example:**
-
+**Install from GitHub URL:**
 ```bash
+# Install from a specific subdirectory in a repository
+mskills install https://github.com/user/repo/tree/main/path/to/skill
+
+# Example: Install 'skill-creator' from anthropics/skills
+mskills install https://github.com/anthropics/skills/tree/main/skills/skill-creator
+```
+
+> [!NOTE]
+> When installing from a specific subdirectory, **mskills** uses `git sparse-checkout` to download only the necessary files, ensuring efficiency even for large repositories.
+
+**Install from Local Path:**
+```bash
+# Registers a skill from a local directory
+mskills install ./examples/hello-world
+# OR legacy command
 mskills add hello-world ./examples/hello-world
 ```
 
@@ -93,7 +101,9 @@ This will output an XML block like:
 
 | Command | Description |
 | :--- | :--- |
-| `mskills add <name> <path>` | Register a skill. |
+| `mskills install <source> [name]` | Install a skill from GitHub or local path. |
+| `mskills update <name> [source]` | Update an installed skill. |
+| `mskills add <name> <path>` | Register a local skill (Legacy). |
 | `mskills remove <names...>` | Remove registered skills. |
 | `mskills list` | List registered skills. |
 | `mskills agents add <names...>` | Enable target agents. |
@@ -127,7 +137,7 @@ A demo skill is included in `examples/hello-world`.
 
 ```bash
 # 1. Add the demo skill
-mskills add hello-world ./examples/hello-world
+mskills install ./examples/hello-world
 
 # 2. Enable an agent (e.g., Claude)
 mskills agents add claude
