@@ -8,6 +8,7 @@ const configSchema = z.object({
     z.string(),
     z.object({
       path: z.string(),
+      sourceUrl: z.string().optional(),
     })
   ).default({}),
   agents: z.array(z.string()).default([]),

@@ -8,10 +8,10 @@ export function registerUpdateCommand(program: Command) {
     .command('update')
     .description('Update a skill from source')
     .argument('<name>', 'Skill name')
-    .argument('[path]', 'Path to the skill directory (optional if updating from registered path)')
-    .action(async (name, path) => {
+    .argument('[source]', 'GitHub URL or path to update from (optional if installed from Git)')
+    .action(async (name, source) => {
       try {
-        await skillManager.update(name, path);
+        await skillManager.update(name, source);
         console.log(chalk.green(`✓ Skill '${name}' updated`));
       } catch (error: unknown) {
         console.error(chalk.red(`Error: ${getErrorMessage(error)}`));
