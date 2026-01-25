@@ -22,9 +22,9 @@ npm link
 
 ## Usage
 
-### 1. Add/Install a Skill
+### 1. Add a Skill
 
-Install a skill from a GitHub URL or add a local skill.
+Add a skill from a GitHub URL or local path.
 
 ```bash
 mskills add <source> [name]
@@ -32,15 +32,15 @@ mskills add <source> [name]
 
 **Add from GitHub URL:**
 ```bash
-# Install from a specific subdirectory in a repository
+# Add from a specific subdirectory in a repository
 mskills add https://github.com/user/repo/tree/main/path/to/skill
 
-# Example: Install 'skill-creator' from anthropics/skills
+# Example: Add 'skill-creator' from anthropics/skills
 mskills add https://github.com/anthropics/skills/tree/main/skills/skill-creator
 ```
 
 > [!NOTE]
-> When installing from a specific subdirectory, **mskills** uses `git sparse-checkout` to download only the necessary files, ensuring efficiency even for large repositories.
+> When adding from a specific subdirectory, **mskills** uses `git sparse-checkout` to download only the necessary files, ensuring efficiency even for large repositories.
 
 **Add from Local Path:**
 ```bash
@@ -101,8 +101,8 @@ This will output an XML block like:
 
 | Command | Description |
 | :--- | :--- |
-| `mskills add <source> [name]` | Add/Install a skill from GitHub or local path. |
-| `mskills update <name> [source]` | Update an installed skill. |
+| `mskills add <source> [name]` | Add a skill from GitHub or local path. |
+| `mskills update <name> [source]` | Update an added skill. |
 | `mskills remove <names...>` | Remove registered skills. |
 | `mskills list` | List registered skills. |
 | `mskills agents add <names...>` | Enable target agents. |
@@ -136,7 +136,7 @@ A demo skill is included in `examples/hello-world`.
 
 ```bash
 # 1. Add the demo skill
-mskills install ./examples/hello-world
+mskills add ./examples/hello-world
 
 # 2. Enable an agent (e.g., Claude)
 mskills agents add claude
