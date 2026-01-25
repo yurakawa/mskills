@@ -30,6 +30,8 @@ Add a skill from a GitHub URL or local path.
 mskills add <source> [name]
 ```
 
+Added skills are copied or downloaded to the internal skills cache directory: `~/.mskills/skills`.
+
 **Add from GitHub URL:**
 ```bash
 # Add from a specific subdirectory in a repository
