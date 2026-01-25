@@ -19,7 +19,7 @@ describe('SkillManager', () => {
 
   describe('add', () => {
     it('should add a skill to config', async () => {
-      await skillManager.add('test-skill', './test-skill');
+      await skillManager.add('./test-skill', 'test-skill');
 
       expect(fs.access).toHaveBeenCalled();
       expect(fs.cp).toHaveBeenCalled();

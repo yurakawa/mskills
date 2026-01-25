@@ -5,7 +5,7 @@ import { validateSkill } from './linter.js';
 import { pullRepo, isGitUrl, installFromGit } from '../utils/git.js';
 
 export class SkillManager {
-  async install(source: string, name?: string) {
+  async add(source: string, name?: string) {
     const config = await loadConfig();
     let skillName = name;
     let sourceUrl: string | undefined;
@@ -54,10 +54,6 @@ export class SkillManager {
       sourceUrl,
     };
     await saveConfig(config);
-  }
-
-  async add(name: string, skillPath: string) {
-    return this.install(skillPath, name);
   }
 
   async update(name: string, source?: string) {
