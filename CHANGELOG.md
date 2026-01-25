@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.10
+
+### Patch Changes
+
+- [#38](https://github.com/yurakawa/mskills/pull/38) [`e029930`](https://github.com/yurakawa/mskills/commit/e029930e5adf83bf596630a936925877295e01af) Thanks [@yurakawa](https://github.com/yurakawa)! - refactor: consolidate install command into add
+
 ## 0.3.9
 
 ### Patch Changes
