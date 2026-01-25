@@ -30,7 +30,7 @@ export function registerAddCommand(program: Command) {
              }
         }
 
-        await skillManager.install(source, skillName);
+        await skillManager.add(source, skillName);
         console.log(chalk.green(`✓ Skill added.`));
       } catch (error: unknown) {
         if (error instanceof ValidationError) {

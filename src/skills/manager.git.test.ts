@@ -25,10 +25,10 @@ describe('SkillManager with Git', () => {
     vi.mocked(isGitUrl).mockImplementation((url) => url.startsWith('http') || url.startsWith('git') || url.includes('github.com'));
   });
 
-  describe('install', () => {
+  describe('add', () => {
     it('should install from git when source is subdirectory URL', async () => {
       const url = 'https://github.com/user/repo/tree/main/test-skill';
-      await skillManager.install(url);
+      await skillManager.add(url);
 
       expect(isGitUrl).toHaveBeenCalledWith(url);
       expect(installFromGit).toHaveBeenCalledWith(url, expect.stringContaining('test-skill'));
@@ -44,7 +44,7 @@ describe('SkillManager with Git', () => {
     it('should use provided name for git install', async () => {
         const url = 'https://github.com/user/repo'; // URL differs, but name provided
         const name = 'test-skill';
-        await skillManager.install(url, name);
+        await skillManager.add(url, name);
         
         expect(installFromGit).toHaveBeenCalledWith(url, expect.stringContaining(name));
          expect(saveConfig).toHaveBeenCalledWith(expect.objectContaining({
