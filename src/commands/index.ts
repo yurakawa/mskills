@@ -1,5 +1,4 @@
 import type { Command } from 'commander';
-import { registerInstallCommand } from './install.js';
 import { registerAddCommand } from './add.js';
 import { registerUpdateCommand } from './update.js';
 import { registerRemoveCommand } from './remove.js';
@@ -12,7 +11,6 @@ import { registerVersionCommand } from './version.js';
 import { registerPromptCommand } from './prompt.js';
 
 export function registerCommands(program: Command) {
-  registerInstallCommand(program);
   registerAddCommand(program);
   registerUpdateCommand(program);
   registerRemoveCommand(program);

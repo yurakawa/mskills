@@ -22,32 +22,32 @@ npm link
 
 ## Usage
 
-### 1. Install a Skill
+### 1. Add/Install a Skill
 
-Install a skill from a GitHub URL or a local path.
+Install a skill from a GitHub URL or add a local skill.
 
 ```bash
-mskills install <source> [name]
+mskills add <source> [name]
 ```
 
-**Install from GitHub URL:**
+**Add from GitHub URL:**
 ```bash
 # Install from a specific subdirectory in a repository
-mskills install https://github.com/user/repo/tree/main/path/to/skill
+mskills add https://github.com/user/repo/tree/main/path/to/skill
 
 # Example: Install 'skill-creator' from anthropics/skills
-mskills install https://github.com/anthropics/skills/tree/main/skills/skill-creator
+mskills add https://github.com/anthropics/skills/tree/main/skills/skill-creator
 ```
 
 > [!NOTE]
 > When installing from a specific subdirectory, **mskills** uses `git sparse-checkout` to download only the necessary files, ensuring efficiency even for large repositories.
 
-**Install from Local Path:**
+**Add from Local Path:**
 ```bash
 # Registers a skill from a local directory
-mskills install ./examples/hello-world
-# OR legacy command
-mskills add hello-world ./examples/hello-world
+mskills add ./examples/hello-world
+# Legacy format also supported: mskills add <name> <path>
+# mskills add hello-world ./examples/hello-world
 ```
 
 ### 2. Enable Agents
@@ -101,9 +101,8 @@ This will output an XML block like:
 
 | Command | Description |
 | :--- | :--- |
-| `mskills install <source> [name]` | Install a skill from GitHub or local path. |
+| `mskills add <source> [name]` | Add/Install a skill from GitHub or local path. |
 | `mskills update <name> [source]` | Update an installed skill. |
-| `mskills add <name> <path>` | Register a local skill (Legacy). |
 | `mskills remove <names...>` | Remove registered skills. |
 | `mskills list` | List registered skills. |
 | `mskills agents add <names...>` | Enable target agents. |
