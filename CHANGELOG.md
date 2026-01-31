@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.11
+
+### Patch Changes
+
+- [#42](https://github.com/yurakawa/mskills/pull/42) [`c4481a5`](https://github.com/yurakawa/mskills/commit/c4481a53d3e11ede4d3c416780afcdf3451293d9) Thanks [@yurakawa](https://github.com/yurakawa)! - implement skill name/path trimming
+
 ## 0.3.10
 
 ### Patch Changes
