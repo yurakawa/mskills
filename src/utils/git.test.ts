@@ -41,6 +41,33 @@ describe('git utils', () => {
             });
         });
 
+        it('should handle trailing slash in subdirectory URL', () => {
+            const result = parseGitHubUrl('https://github.com/owner/repo/tree/main/path/to/skill/');
+            expect(result).toEqual({
+                url: 'https://github.com/owner/repo.git',
+                branch: 'main',
+                path: 'path/to/skill'
+            });
+        });
+
+        it('should handle blob URL', () => {
+            const result = parseGitHubUrl('https://github.com/owner/repo/blob/main/path/to/skill/SKILL.md');
+            expect(result).toEqual({
+                url: 'https://github.com/owner/repo.git',
+                branch: 'main',
+                path: 'path/to/skill/SKILL.md'
+            });
+        });
+
+        it('should handle whitespace in URL', () => {
+            const result = parseGitHubUrl('  https://github.com/owner/repo/tree/main/skill  ');
+            expect(result).toEqual({
+                url: 'https://github.com/owner/repo.git',
+                branch: 'main',
+                path: 'skill'
+            });
+        });
+
         it('should return null for non-matching URL', () => {
              expect(parseGitHubUrl('https://example.com/foo')).toBeNull();
         });

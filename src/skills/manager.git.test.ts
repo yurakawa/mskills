@@ -41,6 +41,24 @@ describe('SkillManager with Git', () => {
       }));
     });
 
+    it('should install from git when source is subdirectory URL with trailing slash', async () => {
+      const url = 'https://github.com/user/repo/tree/main/test-skill/';
+      await skillManager.add(url);
+
+      expect(installFromGit).toHaveBeenCalledWith(url, expect.stringContaining('test-skill'));
+    });
+
+    it('should trim whitespace from source and name', async () => {
+        const url = '  https://github.com/user/repo/tree/main/test-skill  ';
+        await skillManager.add(url);
+
+        expect(installFromGit).toHaveBeenCalledWith(url.trim(), expect.stringContaining('test-skill'));
+        expect(saveConfig).toHaveBeenCalledWith(expect.objectContaining({
+            skills: expect.objectContaining({
+                'test-skill': expect.anything()
+            })
+        }));
+    });
     it('should use provided name for git install', async () => {
         const url = 'https://github.com/user/repo'; // URL differs, but name provided
         const name = 'test-skill';

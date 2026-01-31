@@ -13,13 +13,14 @@ export interface GitSource {
 }
 
 export function parseGitHubUrl(url: string): GitSource | null {
+  const trimmedUrl = url.trim();
   // Handle github.com/owner/repo/tree/branch/path or /blob/branch/path
-  const httpsMatch = url.match(/^https?:\/\/github\.com\/([^/]+)\/([^/]+)(?:\/(?:tree|blob)\/([^/]+)\/(.+))?$/);
+  const httpsMatch = trimmedUrl.match(/^https?:\/\/github\.com\/([^/]+)\/([^/]+)(?:\/(?:tree|blob)\/([^/]+)\/(.+))?$/);
   if (httpsMatch) {
     return {
       url: `https://github.com/${httpsMatch[1]}/${httpsMatch[2].replace(/\.git$/, '')}.git`,
       branch: httpsMatch[3],
-      path: httpsMatch[4],
+      path: httpsMatch[4]?.replace(/\/+$/, ''),
     };
   }
   

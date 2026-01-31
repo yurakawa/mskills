@@ -7,20 +7,24 @@ import { pullRepo, isGitUrl, installFromGit } from '../utils/git.js';
 export class SkillManager {
   async add(source: string, name?: string) {
     const config = await loadConfig();
-    let skillName = name;
+    const normalizedSource = source.trim();
+    let normalizedSkillName = name?.trim();
     let sourceUrl: string | undefined;
 
-    if (isGitUrl(source)) {
-      sourceUrl = source;
-      if (!skillName) {
-        const parts = source.split('/');
-        skillName = parts[parts.length - 1].replace(/\.git$/, '');
+    if (isGitUrl(normalizedSource)) {
+      sourceUrl = normalizedSource;
+      if (!normalizedSkillName) {
+        // Trim trailing slash before splitting to get the last component correctly
+        const pathParts = normalizedSource.replace(/\/+$/, '').split('/');
+        normalizedSkillName = pathParts[pathParts.length - 1].replace(/\.git$/, '');
       }
     } else {
-      if (!skillName) {
-        skillName = path.basename(source);
+      if (!normalizedSkillName) {
+        normalizedSkillName = path.basename(normalizedSource.replace(/\/+$/, ''));
       }
     }
+
+    const skillName = normalizedSkillName;
 
     if (!skillName) {
       throw new Error('Could not determine skill name.');
