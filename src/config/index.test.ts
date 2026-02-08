@@ -1,7 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { loadConfig, saveConfig } from './index.js';
+import { loadConfig, saveConfig, getConfigPath, getSkillsDir, getMskillsDir } from './index.js';
 import fs from 'node:fs/promises';
-import { Stats } from 'node:fs';
 import path from 'node:path';
 
 
@@ -14,8 +13,6 @@ vi.mock('node:os', () => ({
 
 describe('Config', () => {
   const mockHomeDir = '/mock/home';
-  const mockConfigDir = path.join(mockHomeDir, '.config', 'mskills');
-  const mockConfigPath = path.join(mockConfigDir, 'config.json');
   const mockDotMskillsDir = path.join(mockHomeDir, '.mskills');
   const mockOldConfigPath = path.join(mockHomeDir, '.mskills.json');
 
@@ -25,6 +22,21 @@ describe('Config', () => {
     vi.mocked(fs.stat).mockRejectedValue({ code: 'ENOENT' });
     vi.mocked(fs.mkdir).mockResolvedValue(undefined);
     vi.mocked(fs.rename).mockResolvedValue(undefined);
+  });
+
+  describe('paths', () => {
+    it('should return default paths', () => {
+       expect(getMskillsDir()).toBe(path.join(mockHomeDir, '.config', 'mskills'));
+       expect(getConfigPath()).toBe(path.join(mockHomeDir, '.config', 'mskills', 'config.json'));
+       expect(getSkillsDir()).toBe(path.join(mockHomeDir, '.config', 'mskills', 'skills'));
+    });
+
+    it('should respect XDG_CONFIG_HOME', () => {
+       const customXdg = '/custom/xdg';
+       vi.stubEnv('XDG_CONFIG_HOME', customXdg);
+       expect(getMskillsDir()).toBe(path.join(customXdg, 'mskills'));
+       expect(getConfigPath()).toBe(path.join(customXdg, 'mskills', 'config.json'));
+    });
   });
 
   describe('loadConfig', () => {
@@ -56,7 +68,7 @@ describe('Config', () => {
 
       await loadConfig();
 
-      expect(fs.rename).toHaveBeenCalledWith(mockOldConfigPath, mockConfigPath);
+      expect(fs.rename).toHaveBeenCalledWith(mockOldConfigPath, getConfigPath());
     });
 
     it('should migrate .mskills directory if it exists', async () => {
@@ -70,18 +82,7 @@ describe('Config', () => {
 
       await loadConfig();
 
-      expect(fs.rename).toHaveBeenCalledWith(mockDotMskillsDir, mockConfigDir);
-    });
-
-    it('should use XDG_CONFIG_HOME if set', async () => {
-      const xdgHome = '/custom/xdg';
-      vi.stubEnv('XDG_CONFIG_HOME', xdgHome);
-      vi.mocked(fs.readFile).mockRejectedValue({ code: 'ENOENT' });
-
-      await loadConfig();
-
-      // Check if mkdir was called for the custom path
-      expect(fs.writeFile).toBeDefined(); // just to use vi.mocked
+      expect(fs.rename).toHaveBeenCalledWith(mockDotMskillsDir, getMskillsDir());
     });
   });
 
@@ -92,7 +93,7 @@ describe('Config', () => {
       await saveConfig(mockConfig);
 
       expect(fs.writeFile).toHaveBeenCalledWith(
-        mockConfigPath,
+        getConfigPath(),
         JSON.stringify(mockConfig, null, 2),
         'utf-8'
       );

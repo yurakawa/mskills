@@ -1,6 +1,6 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { loadConfig, saveConfig, SKILLS_DIR } from '../config/index.js';
+import { loadConfig, saveConfig, getSkillsDir } from '../config/index.js';
 import { validateSkill } from './linter.js';
 import { pullRepo, isGitUrl, installFromGit } from '../utils/git.js';
 
@@ -34,10 +34,11 @@ export class SkillManager {
       throw new Error(`Skill '${skillName}' already exists.`);
     }
 
-    const internalPath = path.join(SKILLS_DIR, skillName);
+    const skillsDir = getSkillsDir();
+    const internalPath = path.join(skillsDir, skillName);
 
     if (sourceUrl) {
-      await fs.mkdir(SKILLS_DIR, { recursive: true });
+      await fs.mkdir(skillsDir, { recursive: true });
       try {
         await installFromGit(sourceUrl, internalPath);
         await validateSkill(internalPath);
@@ -49,7 +50,7 @@ export class SkillManager {
     } else {
       const absolutePath = path.resolve(source);
       await validateSkill(absolutePath);
-      await fs.mkdir(SKILLS_DIR, { recursive: true });
+      await fs.mkdir(skillsDir, { recursive: true });
       await fs.cp(absolutePath, internalPath, { recursive: true });
     }
 
@@ -127,7 +128,7 @@ export class SkillManager {
   async remove(name: string) {
     const config = await loadConfig();
     if (config.skills[name]) {
-      const internalPath = path.join(SKILLS_DIR, name);
+      const internalPath = path.join(getSkillsDir(), name);
       
       // Delete from internal storage
       await fs.rm(internalPath, { recursive: true, force: true });

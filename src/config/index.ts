@@ -19,7 +19,7 @@ export type Config = z.infer<typeof configSchema>;
 const OLD_CONFIG_PATH = path.join(os.homedir(), '.mskills.json');
 const DOT_MSKILLS_DIR = path.join(os.homedir(), '.mskills');
 
-function getMskillsDir() {
+export function getMskillsDir() {
   const xdgConfigHome = process.env.XDG_CONFIG_HOME;
   if (xdgConfigHome) {
     return path.join(xdgConfigHome, 'mskills');
@@ -27,9 +27,13 @@ function getMskillsDir() {
   return path.join(os.homedir(), '.config', 'mskills');
 }
 
-export const MSKILLS_DIR = getMskillsDir();
-export const CONFIG_PATH = path.join(MSKILLS_DIR, 'config.json');
-export const SKILLS_DIR = path.join(MSKILLS_DIR, 'skills');
+export function getConfigPath() {
+  return path.join(getMskillsDir(), 'config.json');
+}
+
+export function getSkillsDir() {
+  return path.join(getMskillsDir(), 'skills');
+}
 
 async function migrateConfig() {
   try {
@@ -38,8 +42,8 @@ async function migrateConfig() {
     try {
       const stats = await fs.stat(OLD_CONFIG_PATH);
       if (stats.isFile()) {
-        await fs.mkdir(MSKILLS_DIR, { recursive: true });
-        await fs.rename(OLD_CONFIG_PATH, CONFIG_PATH);
+        await fs.mkdir(getMskillsDir(), { recursive: true });
+        await fs.rename(OLD_CONFIG_PATH, getConfigPath());
       }
     } catch (e: any) {
       if (e.code !== 'ENOENT') throw e;
@@ -48,15 +52,16 @@ async function migrateConfig() {
     // 2. Migrate ~/.mskills/ directory to ~/.config/mskills/
     try {
       const dotMskillsStats = await fs.stat(DOT_MSKILLS_DIR);
-      if (dotMskillsStats.isDirectory() && DOT_MSKILLS_DIR !== MSKILLS_DIR) {
+      const mskillsDir = getMskillsDir();
+      if (dotMskillsStats.isDirectory() && DOT_MSKILLS_DIR !== mskillsDir) {
         // Only migrate if the target directory doesn't exist yet
         try {
-          await fs.stat(MSKILLS_DIR);
+          await fs.stat(mskillsDir);
         } catch (e: any) {
           if (e.code === 'ENOENT') {
-            await fs.mkdir(path.dirname(MSKILLS_DIR), { recursive: true });
-            await fs.rename(DOT_MSKILLS_DIR, MSKILLS_DIR);
-            console.log(`Moved ${DOT_MSKILLS_DIR} to ${MSKILLS_DIR}`);
+            await fs.mkdir(path.dirname(mskillsDir), { recursive: true });
+            await fs.rename(DOT_MSKILLS_DIR, mskillsDir);
+            console.log(`Moved ${DOT_MSKILLS_DIR} to ${mskillsDir}`);
           }
         }
       }
@@ -72,7 +77,8 @@ async function migrateConfig() {
 export async function loadConfig(): Promise<Config> {
   await migrateConfig();
   try {
-    const content = await fs.readFile(CONFIG_PATH, 'utf-8');
+    const configPath = getConfigPath();
+    const content = await fs.readFile(configPath, 'utf-8');
     const json = JSON.parse(content);
     return configSchema.parse(json);
   } catch (error: unknown) {
@@ -80,14 +86,17 @@ export async function loadConfig(): Promise<Config> {
       return configSchema.parse({});
     }
     if (error instanceof SyntaxError) {
-      throw new Error(`Invalid JSON in configuration file (${CONFIG_PATH}): ${error.message}`);
+      const configPath = getConfigPath();
+      throw new Error(`Invalid JSON in configuration file (${configPath}): ${error.message}`);
     }
     throw error;
   }
 }
 
 export async function saveConfig(config: Config): Promise<void> {
-  await fs.mkdir(MSKILLS_DIR, { recursive: true });
+  const mskillsDir = getMskillsDir();
+  const configPath = getConfigPath();
+  await fs.mkdir(mskillsDir, { recursive: true });
   const content = JSON.stringify(config, null, 2);
-  await fs.writeFile(CONFIG_PATH, content, 'utf-8');
+  await fs.writeFile(configPath, content, 'utf-8');
 }

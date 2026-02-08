@@ -7,7 +7,7 @@ vi.mock('node:fs/promises');
 vi.mock('../config/index.js');
 
 describe('SkillManager', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks();
     vi.mocked(loadConfig).mockResolvedValue({ skills: {}, agents: [] });
     vi.mocked(fs.access).mockResolvedValue(undefined);
@@ -15,6 +15,11 @@ describe('SkillManager', () => {
     vi.mocked(fs.cp).mockResolvedValue(undefined);
     vi.mocked(fs.rm).mockResolvedValue(undefined);
     vi.mocked(fs.readFile).mockResolvedValue('---\nname: test-skill\ndescription: test\n---\n');
+
+    const { getSkillsDir, getConfigPath, getMskillsDir } = await import('../config/index.js');
+    vi.mocked(getSkillsDir).mockReturnValue('/mock/skills');
+    vi.mocked(getConfigPath).mockReturnValue('/mock/config.json');
+    vi.mocked(getMskillsDir).mockReturnValue('/mock/mskills');
   });
 
   describe('add', () => {
