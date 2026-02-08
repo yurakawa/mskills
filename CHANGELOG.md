@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.12
+
+### Patch Changes
+
+- [#44](https://github.com/yurakawa/mskills/pull/44) [`e276bbe`](https://github.com/yurakawa/mskills/commit/e276bbe0107d0ab34ce58b355605ca28711ba2fc) Thanks [@yurakawa](https://github.com/yurakawa)! - feat: move config directory to ~/.config/mskills and add migration logic
+
 ## 0.3.11
 
 ### Patch Changes
