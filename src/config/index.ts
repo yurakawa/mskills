@@ -17,21 +17,55 @@ const configSchema = z.object({
 export type Config = z.infer<typeof configSchema>;
 
 const OLD_CONFIG_PATH = path.join(os.homedir(), '.mskills.json');
-const MSKILLS_DIR = path.join(os.homedir(), '.mskills');
+const DOT_MSKILLS_DIR = path.join(os.homedir(), '.mskills');
+
+function getMskillsDir() {
+  const xdgConfigHome = process.env.XDG_CONFIG_HOME;
+  if (xdgConfigHome) {
+    return path.join(xdgConfigHome, 'mskills');
+  }
+  return path.join(os.homedir(), '.config', 'mskills');
+}
+
+export const MSKILLS_DIR = getMskillsDir();
 export const CONFIG_PATH = path.join(MSKILLS_DIR, 'config.json');
 export const SKILLS_DIR = path.join(MSKILLS_DIR, 'skills');
 
 async function migrateConfig() {
   try {
-    const stats = await fs.stat(OLD_CONFIG_PATH);
-    if (stats.isFile()) {
-      await fs.mkdir(MSKILLS_DIR, { recursive: true });
-      await fs.rename(OLD_CONFIG_PATH, CONFIG_PATH);
+    // 1. Migrate ~/.mskills.json to newer structure (~/.config/mskills/config.json)
+    // This is for very old versions.
+    try {
+      const stats = await fs.stat(OLD_CONFIG_PATH);
+      if (stats.isFile()) {
+        await fs.mkdir(MSKILLS_DIR, { recursive: true });
+        await fs.rename(OLD_CONFIG_PATH, CONFIG_PATH);
+      }
+    } catch (e: any) {
+      if (e.code !== 'ENOENT') throw e;
     }
+
+    // 2. Migrate ~/.mskills/ directory to ~/.config/mskills/
+    try {
+      const dotMskillsStats = await fs.stat(DOT_MSKILLS_DIR);
+      if (dotMskillsStats.isDirectory() && DOT_MSKILLS_DIR !== MSKILLS_DIR) {
+        // Only migrate if the target directory doesn't exist yet
+        try {
+          await fs.stat(MSKILLS_DIR);
+        } catch (e: any) {
+          if (e.code === 'ENOENT') {
+            await fs.mkdir(path.dirname(MSKILLS_DIR), { recursive: true });
+            await fs.rename(DOT_MSKILLS_DIR, MSKILLS_DIR);
+            console.log(`Moved ${DOT_MSKILLS_DIR} to ${MSKILLS_DIR}`);
+          }
+        }
+      }
+    } catch (e: any) {
+      if (e.code !== 'ENOENT') throw e;
+    }
+
   } catch (error: unknown) {
-    if ((error as { code?: string }).code !== 'ENOENT') {
-      console.warn(`Warning: Failed to migrate existing config: ${error}`);
-    }
+    console.warn(`Warning: Failed to migrate existing config: ${error}`);
   }
 }
 
