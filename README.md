@@ -30,7 +30,7 @@ Add a skill from a GitHub URL or local path.
 mskills add <source> [name]
 ```
 
-Added skills are copied or downloaded to the internal skills cache directory: `~/.mskills/skills`.
+Added skills are copied or downloaded to the internal skills cache directory: `~/.config/mskills/skills`.
 
 **Add from GitHub URL:**
 ```bash
@@ -94,7 +94,7 @@ This will output an XML block like:
   <skill>
     <name>hello-world</name>
     <description>A simple hello world skill</description>
-    <location>/Users/yurakawa/.mskills/skills/hello-world/SKILL.md</location>
+    <location>/Users/yurakawa/.config/mskills/skills/hello-world/SKILL.md</location>
   </skill>
 </available_skills>
 ```
@@ -114,12 +114,10 @@ This will output an XML block like:
 | `mskills apply --force` | Force overwrite existing skills. |
 | `mskills prompt` | Generate XML prompt for AI agents. |
 
-## Configuration
-
 **mskills** stores its configuration and data in the following directory:
 
-- **Config File**: `~/.mskills/config.json`
-- **Internal Skills Cache**: `~/.mskills/skills` (used for internal management)
+- **Config File**: `~/.config/mskills/config.json`
+- **Internal Skills Cache**: `~/.config/mskills/skills` (used for internal management)
 
 ## Supported Agents
 
