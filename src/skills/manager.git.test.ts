@@ -9,7 +9,7 @@ vi.mock('../config/index.js');
 vi.mock('../utils/git.js');
 
 describe('SkillManager with Git', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks();
     vi.mocked(loadConfig).mockResolvedValue({ skills: {}, agents: [] });
     vi.mocked(fs.access).mockResolvedValue(undefined);
@@ -18,6 +18,11 @@ describe('SkillManager with Git', () => {
     vi.mocked(fs.rm).mockResolvedValue(undefined);
     // Mock reading SKILL.md for validation
     vi.mocked(fs.readFile).mockResolvedValue('---\nname: test-skill\ndescription: test\n---\n');
+
+    const { getSkillsDir, getConfigPath, getMskillsDir } = await import('../config/index.js');
+    vi.mocked(getSkillsDir).mockReturnValue('/mock/skills');
+    vi.mocked(getConfigPath).mockReturnValue('/mock/config.json');
+    vi.mocked(getMskillsDir).mockReturnValue('/mock/mskills');
 
     // Mock Git utils
     vi.mocked(installFromGit).mockResolvedValue(undefined);

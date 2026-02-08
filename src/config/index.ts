@@ -16,29 +16,22 @@ const configSchema = z.object({
 
 export type Config = z.infer<typeof configSchema>;
 
-const OLD_CONFIG_PATH = path.join(os.homedir(), '.mskills.json');
-const MSKILLS_DIR = path.join(os.homedir(), '.mskills');
-export const CONFIG_PATH = path.join(MSKILLS_DIR, 'config.json');
-export const SKILLS_DIR = path.join(MSKILLS_DIR, 'skills');
+export function getMskillsDir() {
+  return path.join(os.homedir(), '.config', 'mskills');
+}
 
-async function migrateConfig() {
-  try {
-    const stats = await fs.stat(OLD_CONFIG_PATH);
-    if (stats.isFile()) {
-      await fs.mkdir(MSKILLS_DIR, { recursive: true });
-      await fs.rename(OLD_CONFIG_PATH, CONFIG_PATH);
-    }
-  } catch (error: unknown) {
-    if ((error as { code?: string }).code !== 'ENOENT') {
-      console.warn(`Warning: Failed to migrate existing config: ${error}`);
-    }
-  }
+export function getConfigPath() {
+  return path.join(getMskillsDir(), 'config.json');
+}
+
+export function getSkillsDir() {
+  return path.join(getMskillsDir(), 'skills');
 }
 
 export async function loadConfig(): Promise<Config> {
-  await migrateConfig();
   try {
-    const content = await fs.readFile(CONFIG_PATH, 'utf-8');
+    const configPath = getConfigPath();
+    const content = await fs.readFile(configPath, 'utf-8');
     const json = JSON.parse(content);
     return configSchema.parse(json);
   } catch (error: unknown) {
@@ -46,14 +39,17 @@ export async function loadConfig(): Promise<Config> {
       return configSchema.parse({});
     }
     if (error instanceof SyntaxError) {
-      throw new Error(`Invalid JSON in configuration file (${CONFIG_PATH}): ${error.message}`);
+      const configPath = getConfigPath();
+      throw new Error(`Invalid JSON in configuration file (${configPath}): ${error.message}`);
     }
     throw error;
   }
 }
 
 export async function saveConfig(config: Config): Promise<void> {
-  await fs.mkdir(MSKILLS_DIR, { recursive: true });
+  const mskillsDir = getMskillsDir();
+  const configPath = getConfigPath();
+  await fs.mkdir(mskillsDir, { recursive: true });
   const content = JSON.stringify(config, null, 2);
-  await fs.writeFile(CONFIG_PATH, content, 'utf-8');
+  await fs.writeFile(configPath, content, 'utf-8');
 }
