@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.13
+
+### Patch Changes
+
+- [#46](https://github.com/yurakawa/mskills/pull/46) [`31ca921`](https://github.com/yurakawa/mskills/commit/31ca921e6ed78782b2c11d425f9166705471fd08) Thanks [@yurakawa](https://github.com/yurakawa)! - feat: export skill and config functionality
+
 ## 0.3.12
 
 ### Patch Changes
