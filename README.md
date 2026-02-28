@@ -107,6 +107,8 @@ This will output an XML block like:
 | `mskills update <name> [source]` | Update an added skill. |
 | `mskills remove <names...>` | Remove registered skills. |
 | `mskills list` | List registered skills. |
+| `mskills export config [outPath]` | Export mskills configuration as a zip file. |
+| `mskills export skill <name> [outPath]` | Export a specific skill as a zip file. |
 | `mskills agents add <names...>` | Enable target agents. |
 | `mskills agents remove <names...>` | Disable target agents. |
 | `mskills agents list` | List enabled agents. |

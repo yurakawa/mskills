@@ -7,8 +7,8 @@ import { registerAgentsCommand } from './agents.js';
 import { registerApplyCommand } from './apply.js';
 import { registerConfigCommand } from './config.js';
 import { registerVersionCommand } from './version.js';
-
 import { registerPromptCommand } from './prompt.js';
+import { registerExportCommand } from './export.js';
 
 export function registerCommands(program: Command) {
   registerAddCommand(program);
@@ -20,4 +20,5 @@ export function registerCommands(program: Command) {
   registerPromptCommand(program);
   registerConfigCommand(program);
   registerVersionCommand(program);
+  registerExportCommand(program);
 }
