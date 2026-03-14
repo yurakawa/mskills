@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.14
+
+### Patch Changes
+
+- [#48](https://github.com/yurakawa/mskills/pull/48) [`f065799`](https://github.com/yurakawa/mskills/commit/f0657992448dbbefdc9775252703c5c2454be9b0) Thanks [@yurakawa](https://github.com/yurakawa)! - addd AI agent guidelines
+
 ## 0.3.13
 
 ### Patch Changes
