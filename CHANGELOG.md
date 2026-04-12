@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.16
+
+### Patch Changes
+
+- [#54](https://github.com/yurakawa/mskills/pull/54) [`a21d716`](https://github.com/yurakawa/mskills/commit/a21d716975d801eba2ae7a1caf59e86ffb3e33a2) Thanks [@yurakawa](https://github.com/yurakawa)! - fix(ci): restore registry-url to setup-node for OIDC publishing
+
 ## 0.3.15
 
 ### Patch Changes
