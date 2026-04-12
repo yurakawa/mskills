@@ -63,16 +63,35 @@ export class SkillManager {
 
   async update(name: string, source?: string) {
     const config = await loadConfig();
-    const skillConfig = config.skills[name];
+    
+    let targetName = name;
+    let actualSource = source;
+
+    if (!config.skills[targetName] && !source && (name.includes('/') || name.includes('\\'))) {
+      let inferredName: string;
+      if (isGitUrl(name)) {
+        const pathParts = name.replace(/\/+$/, '').split('/');
+        inferredName = pathParts[pathParts.length - 1].replace(/\.git$/, '');
+      } else {
+        inferredName = path.basename(name.replace(/\/+$/, ''));
+      }
+      
+      if (config.skills[inferredName]) {
+        targetName = inferredName;
+        actualSource = name;
+      }
+    }
+
+    const skillConfig = config.skills[targetName];
     if (!skillConfig) {
       throw new Error(`Skill '${name}' not found.`);
     }
 
     const currentPath = skillConfig.path;
 
-    if (source) {
-      if (isGitUrl(source)) {
-        if (skillConfig.sourceUrl === source) {
+    if (actualSource) {
+      if (isGitUrl(actualSource)) {
+        if (skillConfig.sourceUrl === actualSource) {
           // Check if it's a standard git repo (has .git)
           const gitDir = path.join(currentPath, '.git');
           try {
@@ -81,18 +100,18 @@ export class SkillManager {
           } catch {
              // No .git directory, implies subdirectory install or other non-git structure. Re-install.
              await fs.rm(currentPath, { recursive: true, force: true });
-             await installFromGit(source, currentPath);
+             await installFromGit(actualSource, currentPath);
           }
         } else {
           // New Source URL - Reinstall
           await fs.rm(currentPath, { recursive: true, force: true });
-          await installFromGit(source, currentPath);
-          skillConfig.sourceUrl = source;
+          await installFromGit(actualSource, currentPath);
+          skillConfig.sourceUrl = actualSource;
           await saveConfig(config);
         }
       } else {
         // Local source
-        const absolutePath = path.resolve(source);
+        const absolutePath = path.resolve(actualSource);
         await validateSkill(absolutePath);
         // Clear directory before copying to ensure clean update? 
         // Or just copy over? fs.cp overwrites.
@@ -118,7 +137,7 @@ export class SkillManager {
              await installFromGit(skillConfig.sourceUrl, currentPath);
           }
       } else {
-        throw new Error(`Original source path for '${name}' is not stored. Please provide a path or URL to update from.`);
+        throw new Error(`Original source path for '${targetName}' is not stored. Please provide a path or URL to update from.`);
       }
     }
     
