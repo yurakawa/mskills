@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.15
+
+### Patch Changes
+
+- [#52](https://github.com/yurakawa/mskills/pull/52) [`63a805a`](https://github.com/yurakawa/mskills/commit/63a805a61db2f45aba07e47294693704ab14480c) Thanks [@yurakawa](https://github.com/yurakawa)! - fix: remove failing npm install step from release workflow
+
+- [#51](https://github.com/yurakawa/mskills/pull/51) [`ab9f242`](https://github.com/yurakawa/mskills/commit/ab9f2420de443998b34d97022af68d55d0abd60e) Thanks [@yurakawa](https://github.com/yurakawa)! - feat: allow mskills update to infer skill name from path
+
 ## 0.3.14
 
 ### Patch Changes
