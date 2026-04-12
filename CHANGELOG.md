@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.17
+
+### Patch Changes
+
+- [#56](https://github.com/yurakawa/mskills/pull/56) [`bd49c5a`](https://github.com/yurakawa/mskills/commit/bd49c5a2a95a6023febccde61a96076330e1abe7) Thanks [@yurakawa](https://github.com/yurakawa)! - fix(ci): downgrade runner to node 20 to fix npm install and OIDC publish
+
 ## 0.3.16
 
 ### Patch Changes
