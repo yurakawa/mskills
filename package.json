@@ -1,6 +1,6 @@
 {
   "name": "mskills",
-  "version": "0.3.14",
+  "version": "0.3.15",
   "description": "Manage your AI Agent Skills in one place.",
   "type": "module",
   "bin": {
