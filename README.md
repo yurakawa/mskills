@@ -104,7 +104,7 @@ This will output an XML block like:
 | Command | Description |
 | :--- | :--- |
 | `mskills add <source> [name]` | Add a skill from GitHub or local path. |
-| `mskills update <name> [source]` | Update an added skill. |
+| `mskills update <name_or_path> [source]` | Update an added skill. |
 | `mskills remove <names...>` | Remove registered skills. |
 | `mskills list` | List registered skills. |
 | `mskills export config [outPath]` | Export mskills configuration as a zip file. |
